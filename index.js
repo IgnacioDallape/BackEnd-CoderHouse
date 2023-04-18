@@ -1,26 +1,21 @@
-let productosA = {
-  tomate: 3,
-  lechuga: 2,
-  pimiento: 5,
-  zanahoria: 2,
-  papa: 6,
-  brocoli: 5
-};
-
-let productosB = {
-  cebolla: 1,
-  ajo: 2,
-  espinaca: 4,
-  choclo: 3
-};
-
-
-let results = Object.keys(productosA)
-results = [...results,  ...Object.keys(productosB)]
-let valorBuscado = results.includes('lechuga')
-if(valorBuscado){
-  console.log('existe el producto')
-}else{
-  console.log('no existe el producto')
+const funcionPrueba = (a,b, cb)=>{
+  return console.log(cb(a,b))
 }
-console.log(results)
+
+funcionPrueba(3,4, function(a, b){
+  return a + b
+})
+
+funcionPrueba(3,4, function(a, b){
+  return a - b
+})
+funcionPrueba(3,4, function(a, b){
+  return a * b
+})
+funcionPrueba(3,4, function(a, b){
+  return a / b
+})
+
+funcionPrueba(4,3, function(a, b){
+  return a % b
+})

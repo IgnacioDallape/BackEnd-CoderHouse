@@ -1,51 +1,64 @@
-class ProductManager {
-    constructor(){
-        this.products = []
-    }
-
-    addProduct() {
-        const newProduct = {
-            title: "producto prueba",
-            description: "Este es un producto prueba",
-            price: 200,
-            thumbnail: "Sin imagen",
-            code: "abc123",
-            stock: 25,
-            id: ""
-            };
-            newProduct.id = this.generateId()
-            this.products.push(newProduct);
-        }
-        
-
-
-    getProducts(){
-            console.log(this.products)
-    }
-
-    searchingId(id){
-        console.log(id)
-        let search = this.products.map((items) => items.id != id)
-        if(search != undefined){
-            console.log('correcto')
-        } else {
-            console.log('incorrecto')
+    class ProductManager {
+        constructor() {
+        this.products = [];
         }
     
-    }
-
-    generateId(){
-            let newId = "";
-            for (let i = 0; i < 3; i++) {
-                newId += Math.floor(Math.random() * 10);
+        addProduct(title, description, price, thumbnail, code, stock) {
+        if (title && description && price && thumbnail && code && stock) {
+            const newProduct = {
+            title: title,
+            description: description,
+            price: price,
+            thumbnail: thumbnail,
+            code: code,
+            stock: stock,
+            id: this.generateId(),
+            };
+            this.products.push(newProduct);
+            console.log("Producto agregado:");
+        } else {
+            console.log("Es obligatorio completar todos los campos");
+        }
+        }
+    
+        getProducts() {
+            return this.products;
+        }
+    
+        getProductById(prod) {
+            console.log(prod)
+            let search = this.products.find((product) => product.id === prod);
+            console.log(search)
+            if (search != undefined) {
+                return search
+            } else {
+                console.log("Not Found");
+            }
+        }
+    
+        generateId() {
+            let newId = 1;
+            if (this.products.length > 0) {
+                newId = this.products[this.products.length - 1].id + 1;  //esto sirve para tomar el id del ultimo elemento, sin lo del corchete, me daria NaN
             }
             return newId;
-        }          
+            }
+
+        
+        }
     
+    let a = new ProductManager();
+    a.addProduct(
+        "producto prueba",
+        "Este es un producto prueba",
+        200,
+        "Sin imagen",
+        "abc123",
+        25
+    );
+    a.getProductById();
+    
+    a.getProducts();
 
-}
-
-let a  = new ProductManager()
-a.searchingId('abc123')
-a.addProduct();
-a.getProducts()
+    console.log(a.getProducts())
+    
