@@ -1,6 +1,7 @@
     class ProductManager {
         constructor() {
         this.products = [];
+        this.lastId = 0
         }
     
         addProduct(title, description, price, thumbnail, code, stock) {
@@ -12,10 +13,11 @@
             thumbnail: thumbnail,
             code: code,
             stock: stock,
-            id: this.generateId(),
+            id: this.generateId()
             };
             this.products.push(newProduct);
             console.log("Producto agregado:");
+
         } else {
             console.log("Es obligatorio completar todos los campos");
         }
@@ -25,11 +27,11 @@
             return this.products;
         }
     
-        getProductById(prod) {
-            console.log(prod)
-            let search = this.products.find((product) => product.id === prod);
-            console.log(search)
+        getProductById(id) {
+            let search = this.products.find((product) => product.id == id);
+
             if (search != undefined) {
+                console.log('encontrado el id')
                 return search
             } else {
                 console.log("Not Found");
@@ -37,11 +39,13 @@
         }
     
         generateId() {
-            let newId = 1;
+            this.lastId += 1;
             if (this.products.length > 0) {
-                newId = this.products[this.products.length - 1].id + 1;  //esto sirve para tomar el id del ultimo elemento, sin lo del corchete, me daria NaN
+                let newId = this.products[this.products.length - 1].id + 1;  //esto sirve para tomar el id del ultimo elemento, sin lo del corchete, me daria NaN
+                return newId;
             }
-            return newId;
+            return this.lastId
+
             }
 
         
@@ -56,9 +60,16 @@
         "abc123",
         25
     );
-    a.getProductById();
+    a.addProduct(
+        "producto prueba",
+        "Este es un producto prueba",
+        200,
+        "Sin imagen",
+        "abc123",
+        25
+    );
+    a.getProductById(1);
     
     a.getProducts();
 
-    console.log(a.getProducts())
     
