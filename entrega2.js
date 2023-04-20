@@ -6,22 +6,27 @@
     
                 addProduct(title, description, price, thumbnail, code, stock) {
                     if (title && description && price && thumbnail && code && stock) {
+                        if (this.products.find(product => product.code === code)) {
+                            console.log('El producto ya se encuentra agregado');
+                            return;
+                    } else {
                         const newProduct = {
-                        title: title,
-                        description: description,
-                        price: price,
-                        thumbnail: thumbnail,
-                        code: code,
-                        stock: stock,
-                        id: this.generateId()
+                            title: title,
+                            description: description,
+                            price: price,
+                            thumbnail: thumbnail,
+                            code: code,
+                            stock: stock,
+                            id: this.generateId()
                         };
                         this.products.push(newProduct);
                         console.log("Producto agregado");           
+                    }
                     } else {
                         console.log("Es obligatorio completar todos los campos");
-                    }
+                    }                    
                 }
-            
+
                 getProducts() {
                     console.log('tus productos son: ', this.products)
                     return this.products;
@@ -38,10 +43,6 @@
             
                 generateId() {
                     this.lastId += 1;
-                    if (this.products.length > 0) {
-                        let newId = this.products[this.products.length - 1].id + 1;  //esto sirve para tomar el id del ultimo elemento, sin lo del corchete, me daria NaN
-                        return newId;
-                    }
                     return this.lastId
                 }
 
@@ -98,7 +99,7 @@
         "Este es un producto prueba",
         700,
         "Sin imagen",
-        "abe123",
+        "abc123",
         23
     );
 
