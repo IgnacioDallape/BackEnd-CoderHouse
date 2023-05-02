@@ -57,47 +57,56 @@ class ProductManager {
     }
 
     async getProductById(id) {
-        console.log(this.products.map(product => product))
-        let product = this.products.find(product => product.id === id)
-        if (product) {
-            return product
-        } else {
-            product = undefined
-            return product
+        try{
+            console.log(this.products.map(product => product))
+            let product = this.products.find(product => product.id === id)
+            if (product) {
+                return product
+            } else {
+                product = undefined
+                return product
+            }
+        }catch(err){
+            console.log('error al buscar producto por id ', err)
         }
     }
 
     async updateProduct(id, change, newItem) {
-        if (id != undefined && change != undefined && newItem != undefined) {
-            if (this.products.find((product) => product.id == id)) {
-                let index = this.products.findIndex(product => product.id === id);
-                console.log(index)
-                let a = change;
-                if (a == 'title') {
-                    this.products[index].title = newItem;
-                } else if (a == 'description') {
-                    this.products[index].description = newItem;
-                } else if (a == 'price') {
-                    this.products[index].price = newItem;
-                } else if (a == 'thumbnail') {
-                    this.products[index].thumbnail = newItem;
-                } else if (a == 'code') {
-                    this.products[index].code = newItem;
-                } else if (a == 'stock') {
-                    this.products[index].stock = newItem;
+        try{
+            if (id != undefined && change != undefined && newItem != undefined) {
+                if (this.products.find((product) => product.id == id)) {
+                    let index = this.products.findIndex(product => product.id === id);
+                    console.log(index)
+                    let a = change;
+                    if (a == 'title') {
+                        this.products[index].title = newItem;
+                    } else if (a == 'description') {
+                        this.products[index].description = newItem;
+                    } else if (a == 'price') {
+                        this.products[index].price = newItem;
+                    } else if (a == 'thumbnail') {
+                        this.products[index].thumbnail = newItem;
+                    } else if (a == 'code') {
+                        this.products[index].code = newItem;
+                    } else if (a == 'stock') {
+                        this.products[index].stock = newItem;
+                    } else {
+                        console.log('error al cambiar parametro');
+                    }
+    
+                    await fs.promises.writeFile(this.path, JSON.stringify(this.products, null, 2), 'utf-8');
+    
+                    console.log(`El producto con id ${id} se actualizó correctamente`);
+                    return this.products[index];
                 } else {
-                    console.log('error al cambiar parametro');
+                    console.log('no se encuentra un producto con ese id')
                 }
-
-                await fs.promises.writeFile(this.path, JSON.stringify(this.products, null, 2), 'utf-8');
-
-                console.log(`El producto con id ${id} se actualizó correctamente`);
-                return this.products[index];
             } else {
-                console.log('no se encuentra un producto con ese id')
+                console.log('complete todos los campos para actualizar')
             }
-        } else {
-            console.log('complete todos los campos para actualizar')
+    
+        }catch(err){
+            console.log('error al actualizar productos ', err)
         }
     }
     async deleteProduct(id) {
