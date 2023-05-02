@@ -1,67 +1,29 @@
-// const funcionPrueba = (a,b, cb)=>{
-//   return console.log(cb(a,b))
-// }
+// const http = require('http')
 
-// funcionPrueba(3,4, function(a, b){
-//   return a + b
-// })
-
-// funcionPrueba(3,4, function(a, b){
-//   return a - b
-// })
-// funcionPrueba(3,4, function(a, b){
-//   return a * b
-// })
-// funcionPrueba(3,4, function(a, b){
-//   return a / b
-// })
-
-// funcionPrueba(4,3, function(a, b){
-//   return a % b
+// const server = http.createServer((req,res) => {
+//   console.log(req.url)
+//   if(req.url == '/'){
+//     res.end('hola mundo con http')
+//   }
 // })
 
 
-const fs = require('fs');
-const { DefaultDeserializer } = require("v8");
+// server.listen(8080, () => {
+//   console.log('servidor http corriendo en el puerto 8080')
+// })
 
-let date = new Date()
+//EXPRESS
 
-fs.writeFile('./actividad.txt', JSON.stringify(date),'utf-8', (err)=>{
-  if(err){
-    console.log('no se pudo escribir el archivo')
-  }else{
-    console.log('se escribio el archivo')
-  }
-})
+const express = require('express')
+const path = require('path')
+const app = express()
+const persona = {
+  name: 'nacho',
+  lastname: 'dallape'
+}
 
-fs.unlink('./actividad.txt', (err)=>{
-  if(err){
-    console.log('no se pudo eliminar el archivo')
-  }else{
-    console.log('se elimino el archivo')
-  }
-})
+app.get('/bienvenida', (req, res)=> {res.sendFile(path.join(__dirname,'/index.html')) })
 
-fs.promises.readFile('./actvidad.txt', 'utf-8')
-  .then((data) => {
-    console.log(data)
-  })
-  .catch((err) => {
-    console.log('no se pudo leer la promesa')
-  })
+app.get('/usuario', (req, res)=> {res.send(persona) })
 
-  const saveFile = async () => {
-    let a = await fs.promises.writeFile('./actividad.txt', 'data nueva','utf-8')
-      try{
-        console.log('archivo creado exitosamente')
-      }catch(err){
-        console.log('error al escribir la promesa')
-      }
-  }
-
-  saveFile()
-
-// //clase 5
-
-// const diasLaborales = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes']
-// console.table(diasLaborales.map((item) => item.toUpperCase()))
+app.listen(8080, () => {console.log('servidor corriendo')})

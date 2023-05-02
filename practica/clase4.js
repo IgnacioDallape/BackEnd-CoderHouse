@@ -33,9 +33,9 @@ class ProductManager {
 
       //Aca deberias controlar los parametros.
 
-     //Despues controlar que el code no existe en otro producto.
+      //Despues controlar que el code no existe en otro producto.
 
-     //Si esas validaciones son correctas, aumentamos el id y despues lo usamos
+      //Si esas validaciones son correctas, aumentamos el id y despues lo usamos
 
       this.lastId = this.lastId + 1;
 
@@ -59,7 +59,7 @@ class ProductManager {
 
       //Aca el problema que tenias era que guardabas el objeto newProduct, y tenes que guardar todo el arreglo de productos
 
-     //despues de haber agregado el nuevo producto.
+      //despues de haber agregado el nuevo producto.
 
       this.products.push(newProduct);
 
@@ -189,7 +189,7 @@ productManager.addProduct("producto prueba", "Este es un producto prueba", 200, 
 
   })
 
-  .then(products =>{
+  .then(products => {
 
     console.log(`Products: ${JSON.stringify(products)}`);
 
@@ -197,19 +197,19 @@ productManager.addProduct("producto prueba", "Este es un producto prueba", 200, 
 
   })
 
-  .then(() =>{
+  .then(() => {
 
     return productManager.getProducts();
 
   })
 
-  .then(products =>{
+  .then(products => {
 
     console.log(`Products: ${JSON.stringify(products)}`);
 
   })
 
-  .catch(err =>{
+  .catch(err => {
 
     console.log(err);
 
