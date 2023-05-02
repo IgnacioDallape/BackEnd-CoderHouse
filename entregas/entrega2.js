@@ -8,9 +8,6 @@ class ProductManager {
             this.lastId = 0,
             this.products = []
     }
-    async creatingFile() {
-        await fs.promises.writeFile('./entreganum2.txt', 'Productos \n', 'utf-8')
-    }
 
     async addProduct(title, description, price, thumbnail, code, stock) {
         if (title != undefined && description != undefined && price != undefined && thumbnail != undefined && code != undefined && stock != undefined) {
@@ -34,7 +31,7 @@ class ProductManager {
                     console.log('Producto repetido, no se guardo el producto')
                 } else {
                     this.products.push(newProduct)
-                    let write = await fs.promises.appendFile('./entreganum2.txt', JSON.stringify(this.products, null, 2), 'utf-8')
+                    fs.promises.appendFile('./entreganum2.txt', JSON.stringify(this.products, null, 2), 'utf-8')
                     console.log('producto guardado')
                     return this.products
                 }
@@ -46,19 +43,22 @@ class ProductManager {
         }
     }
 
-    async getProducts() {
-
+    getProducts = async () => {
         try {
-            let data = await fs.promises.readFile(this.path, 'utf-8')
-            return data
+            const data = await fs.promises.readFile(this.path);
+            const products = JSON.parse(data);
+            this.products = products;
+            return this.products;
         } catch (err) {
-            console.log('error al traer la data', err)
+            console.error(`Error loading products: ${err}`);
+            this.products = [];
+            return this.products;
         }
     }
 
     async getProductById(id) {
         console.log(this.products.map(product => product))
-        let product = await this.products.find(product => product.id === id)
+        let product = this.products.find(product => product.id === id)
         if (product) {
             return product
         } else {
@@ -119,7 +119,6 @@ class ProductManager {
 let product = new ProductManager('./entreganum2.txt');
 
 async function testing(name, title, price, thumbnail, code, stock) {
-    await product.creatingFile()
     await product.addProduct(
         name = name,
         title = title,
